@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 000-initial-empty
+      author: anthon.havang
+      changes:
+        - empty:
+
