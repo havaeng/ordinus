@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run CI
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
       - develop
 
 jobs:
-  test:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,11 @@ jobs:
           java-version: "21"
           cache: maven
 
+      - name: Run ktlint
+        run: |
+          curl -sSLo ktlint https://github.com/pinterest/ktlint/releases/download/1.2.1/ktlint
+          chmod +x ktlint
+          ./ktlint "src/**/*.kt"
+
       - name: Run tests
         run: ./mvnw test
-
