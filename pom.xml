@@ -12,19 +12,32 @@
     <artifactId>ordinus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ordinus</name>
-    <description>Demo project for Spring Boot</description>
-    <url/>
+    <description>System for sorting and collection information on medals</description>
+    <url>https://github.com/havaeng/ordinus</url>
     <licenses>
-        <license/>
+        <license>
+            <comments>No part of this work may be used, copied, modified, or distributed without prior written
+                permission from the copyright holder\.
+            </comments>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <name>Anthon Haväng</name>
+            <email>havang@me.com</email>
+            <url>https://github.com/havaeng</url>
+            <roles>
+                <role>owner</role>
+                <role>developer</role>
+                <role>copyright holder</role>
+            </roles>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>scm:git:git://github.com/havaeng/ordinus.git</connection>
+        <developerConnection>scm:git:ssh://github.com/havaeng/ordinus.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/havaeng/ordinus</url>
     </scm>
     <properties>
         <java.version>21</java.version>
