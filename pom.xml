@@ -41,9 +41,9 @@
     </scm>
     <properties>
         <java.version>21</java.version>
-        <kotlin.version>2.2.21</kotlin.version>
+        <kotlin.version>2.3.10</kotlin.version>
         <ktlint.version>1.2.1</ktlint.version>
-        <ktlint.maven.plugin.version>1.15.0</ktlint.maven.plugin.version>
+        <ktlint.maven.plugin.version>3.5.0</ktlint.maven.plugin.version>
         <detekt.version>1.23.8</detekt.version>
     </properties>
     <dependencies>
@@ -197,7 +197,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.6.3</version>
                 <executions>
                     <execution>
                         <id>detekt-check</id>
