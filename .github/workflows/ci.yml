@@ -7,7 +7,7 @@ on:
       - main
   pull_request:
     branches:
-      - develop
+      - main
 
 jobs:
   ci:
@@ -22,7 +22,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-          cache: maven
+          cache: gradle
 
       - name: Run ktlint
         run: |
@@ -31,4 +31,4 @@ jobs:
           ./ktlint "src/**/*.kt"
 
       - name: Run tests
-        run: ./mvnw test
+        run: ./gradlew test
