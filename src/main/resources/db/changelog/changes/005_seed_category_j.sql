@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset anthon.haväng:004-seed-category-j runInTransaction:true
+--changeset anthon.haväng:005-seed-category-j runInTransaction:true
 --preconditions onFail:HALT
 --precondition-sql-check expectedResult:1 SELECT COUNT(*) FROM category WHERE code = 'J';
 
@@ -15,6 +15,8 @@ WHERE decoration_id IN (SELECT d.id
 DELETE
 FROM decoration
 WHERE category_id = (SELECT id FROM category WHERE code = 'J');
+
+
 
 WITH j_src(initial_number, display_order, name_sv, description_sv, abbr_pipe) AS (VALUES (1, 1, 'Johanniterorden', NULL,
                                                                                           'RRJohO|RJohO')),

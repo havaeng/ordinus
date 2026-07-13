@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset anthon.havang:005-seed-category-l runInTransaction:true splitStatements:false
+--changeset anthon.havang:006-seed-category-l runInTransaction:true splitStatements:false
 --preconditions onFail:HALT
 --precondition-sql-check expectedResult:1 SELECT COUNT(*) FROM browse_group WHERE key = 'swedish_without_state_emblem';
 
