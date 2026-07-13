@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: medalj-api
+
+  profiles:
+    default: local
