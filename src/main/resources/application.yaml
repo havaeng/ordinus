@@ -4,3 +4,8 @@ spring:
 
   profiles:
     default: local
+
+app:
+  blob:
+    seed:
+      enabled: false
