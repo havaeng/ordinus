@@ -270,15 +270,19 @@ class DecorationControllerSystemTest {
                         .param("size", "2")
                         .param("sortBy", "id")
                         .param("direction", "desc"),
-                )
-                .andExpect(status().isOk)
+                ).andExpect(status().isOk)
                 .andExpect(jsonPath("$.size").value(2))
                 .andExpect(jsonPath("$.number").value(0))
                 .andExpect(jsonPath("$.content.length()").value(2))
                 .andExpect(jsonPath("$.content[0].id").value(decorationId3))
                 .andExpect(jsonPath("$.content[1].id").value(decorationId2))
         } finally {
-            jdbcTemplate.update("DELETE FROM decoration WHERE id IN (?, ?, ?)", decorationId1, decorationId2, decorationId3)
+            jdbcTemplate.update(
+                "DELETE FROM decoration WHERE id IN (?, ?, ?)",
+                decorationId1,
+                decorationId2,
+                decorationId3,
+            )
             jdbcTemplate.update("DELETE FROM category WHERE id = ?", categoryId)
             jdbcTemplate.update("DELETE FROM browse_group WHERE id = ?", browseGroupId)
         }
