@@ -1,3 +1,5 @@
 package com.ah.ordinus.domain.decoration
 
-class DecorationRepository
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface DecorationRepository : JpaRepository<DecorationEntity, Long>
