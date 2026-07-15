@@ -1,6 +1,6 @@
-package com.ah.ordinus
+package com.ah.ordinus.domain.other
 
-import com.ah.ordinus.MedalsDTO.PersonalMedalEntry
+import com.ah.ordinus.domain.other.MedalsDTO.PersonalMedalEntry
 
 class MedalSorter {
     fun sortPersonalMedals(personalMedals: List<PersonalMedalEntry>): List<PersonalMedalEntry> =

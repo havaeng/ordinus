@@ -1,10 +1,12 @@
 package com.ah.ordinus
 
-import com.ah.ordinus.MedalsDTO.BerchScaleValue
-import com.ah.ordinus.MedalsDTO.Category
-import com.ah.ordinus.MedalsDTO.CoinValue
-import com.ah.ordinus.MedalsDTO.MedalEntry
-import com.ah.ordinus.MedalsDTO.ToBeWorn
+import com.ah.ordinus.domain.other.MedalSorter
+import com.ah.ordinus.domain.other.MedalsDTO
+import com.ah.ordinus.domain.other.MedalsDTO.BerchScaleValue
+import com.ah.ordinus.domain.other.MedalsDTO.Category
+import com.ah.ordinus.domain.other.MedalsDTO.CoinValue
+import com.ah.ordinus.domain.other.MedalsDTO.MedalEntry
+import com.ah.ordinus.domain.other.MedalsDTO.ToBeWorn
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test
 import java.time.Year

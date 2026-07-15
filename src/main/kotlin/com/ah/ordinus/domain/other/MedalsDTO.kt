@@ -1,4 +1,4 @@
-package com.ah.ordinus
+package com.ah.ordinus.domain.other
 
 import java.time.Year
 
