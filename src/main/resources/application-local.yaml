@@ -17,16 +17,15 @@ spring:
     azure:
       storage:
         blob:
-          endpoint: http://127.0.0.1:10000/devstoreaccount1
-          account-name: devstoreaccount1
-          account-key: Eby8vdM02xNOcqFeqCnf2g==
+          connection-string: UseDevelopmentStorage=true
 
 app:
   medals:
-    image-container: medal-pictures
+    container-name: medal-pictures
   blob:
     seed:
       enabled: true
+      unmatched-log-path: build/blob-seed-unmatched.txt
 
 server:
   port: 8080
