@@ -23,6 +23,8 @@ repositories {
 }
 
 dependencies {
+//    implementation("com.azure.spring:spring-cloud-azure-starter-storage-blob:5.15.0")
+    implementation("com.azure:azure-storage-blob:12.27.0")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
@@ -31,6 +33,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("tools.jackson.module:jackson-module-kotlin")
+
+    constraints {
+        implementation("io.netty:netty-codec-http2:<patched-version>") {
+            because("Fix CVE-2026-33871")
+        }
+    }
 
     implementation("org.liquibase:liquibase-core")
 

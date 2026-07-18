@@ -13,7 +13,19 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
 
+  cloud:
+    azure:
+      storage:
+        blob:
+          connection-string: UseDevelopmentStorage=true
 
+app:
+  medals:
+    container-name: medal-pictures
+  blob:
+    seed:
+      enabled: true
+      unmatched-log-path: build/blob-seed-unmatched.txt
 
 server:
   port: 8080

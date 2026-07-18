@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
 @Import(TestcontainersConfiguration::class)
-@SpringBootTest
+@SpringBootTest(properties = ["app.blob.seed.enabled=false"])
 class DecorationControllerSystemTest {
     private lateinit var mockMvc: MockMvc
 

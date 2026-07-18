@@ -40,13 +40,13 @@ class DecorationEntity(
         updatable = false,
         insertable = false,
     )
-    var createdAt: OffsetDateTime? = null,
+    var createdAt: OffsetDateTime,
     @Column(
         name = "updated_at",
         nullable = false,
         insertable = false,
     )
-    var updatedAt: OffsetDateTime? = null,
+    var updatedAt: OffsetDateTime,
 ) {
     @PrePersist
     @PreUpdate
