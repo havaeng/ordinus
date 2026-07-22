@@ -20,7 +20,16 @@ Pull requests that change the production Terraform root run
 `production-plan` environment and Terraform's native GitHub OIDC support. It is
 limited to pull requests whose source branch belongs to this repository, reads
 the remote state without locking it, and cannot apply changes. A reviewer must
-approve the GitHub environment before the job receives its OIDC token.
+approve the GitHub environment before the job receives its OIDC token. The job
+creates or updates one collapsible plan comment in the pull request conversation
+and links back to the complete workflow log.
+
+Production apply is a separate, manually dispatched workflow in
+`.github/workflows/terraform-apply.yml`. It runs only from `main`, waits for the
+protected `production` environment approval, creates a fresh plan with state
+locking enabled, and applies that exact saved plan. Concurrency allows only one
+production apply to run at a time and never cancels an apply already in
+progress.
 
 ```text
 infra/terraform/
@@ -42,9 +51,8 @@ Run the same three commands with `infra/terraform/bootstrap` to check the
 bootstrap root in CI. For authenticated local bootstrap checks, use the
 dedicated Azure CLI profile and initialize the configured remote backend.
 
-Do not apply the production root yet. The pull-request plan workflow must first
-be verified in GitHub, then the protected apply workflow must be added and
-reviewed.
+Do not apply the production root locally. Merge and review the protected apply
+workflow first; its initial manual run is a separate roadmap increment.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific

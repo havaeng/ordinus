@@ -1,0 +1,58 @@
+name: Terraform production apply
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apply:
+    name: Apply production
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: terraform-production-apply
+      cancel-in-progress: false
+    defaults:
+      run:
+        working-directory: infra/terraform/environments/prod
+    env:
+      ARM_USE_OIDC: "true"
+      ARM_USE_AZUREAD: "true"
+      ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
+      TF_VAR_resource_group_name: rg-ordinus-prod
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.5
+
+      - name: Initialize Terraform
+        run: terraform init -input=false
+
+      - name: Create apply plan
+        run: |
+          terraform plan \
+            -input=false \
+            -no-color \
+            -out=terraform.tfplan
+
+      - name: Apply saved plan
+        run: terraform apply -input=false -no-color terraform.tfplan
+
+      - name: Write job summary
+        run: echo "## Terraform production apply completed" >> "$GITHUB_STEP_SUMMARY"
