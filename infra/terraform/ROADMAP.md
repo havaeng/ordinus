@@ -8,11 +8,12 @@ pipeline that consumes them is ready.
 
 1. **Production scaffold (complete)** — Terraform structure, version pinning,
    formatting, and validation without Azure access.
-2. **State bootstrap (current)** — Define protected Azure Storage resources for
-   remote state. No apply yet.
-3. **Run and migrate bootstrap state** — Apply bootstrap once with a personal
-   Azure CLI session, then migrate its local state to `bootstrap.tfstate`.
-4. **Production backend** — Configure the production root to use `prod.tfstate`
+2. **State bootstrap (complete)** — Define protected Azure Storage resources for
+   remote state.
+3. **Run and migrate bootstrap state (complete)** — Apply bootstrap once with a
+   personal Azure CLI session, then migrate its local state to
+   `bootstrap.tfstate`.
+4. **Production backend (next)** — Configure the production root to use `prod.tfstate`
    and verify remote locking without changing production resources.
 5. **GitHub OIDC identities and RBAC** — Create separate plan and apply
    identities. The plan identity is read-only; the apply identity receives only

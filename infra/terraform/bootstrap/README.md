@@ -7,6 +7,7 @@ state can be enabled:
 - a Standard LRS Storage Account;
 - a private blob container;
 - blob versioning and 30-day soft delete;
+- a Storage Blob Data Contributor assignment for the bootstrap administrator;
 - a `CanNotDelete` management lock on the Storage Account.
 
 Shared-key authentication is disabled. Local administration and future CI
@@ -18,10 +19,10 @@ authenticated, authorized identity.
 ## Why this starts with local state
 
 The remote backend cannot be used before its Storage Account exists. The first
-bootstrap apply therefore uses local state. Immediately afterwards, that state
-will be migrated into the new backend under a separate `bootstrap.tfstate` key.
-The production root module will use `prod.tfstate` in the same container.
+bootstrap apply therefore used local state. That state is now stored in the new
+backend under the separate `bootstrap.tfstate` key. The production root module
+will use `prod.tfstate` in the same container.
 
-No apply is part of this iteration. Before the bootstrap is run, the proposed
-resources and the globally unique Storage Account name must be reviewed.
-
+The backend authenticates to the Blob data plane with Microsoft Entra ID. Local
+commands use the dedicated `~/.azure-ordinus` Azure CLI profile; future CI
+workflows will use workload identity federation instead of account keys.
