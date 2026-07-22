@@ -30,5 +30,19 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Terraform ###
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfplan
+
 ### VS Code ###
 .vscode/

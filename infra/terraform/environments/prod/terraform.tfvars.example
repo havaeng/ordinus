@@ -1,0 +1,8 @@
+# The existing resource group is named rg-medalj-dev. The production resource
+# group has a distinct name so that the live frontend remains untouched until a
+# later, controlled migration.
+resource_group_name = "rg-medalj-prod"
+
+# Change this only after confirming that all planned Azure services are available
+# in the chosen region.
+location = "swedencentral"
