@@ -1,0 +1,8 @@
+# Storage Account names are global across Azure. Replace this example with an
+# available name containing only 3-24 lowercase letters and digits.
+storage_account_name = "stordinustfstateabc123"
+
+# These values normally do not need to be changed.
+resource_group_name = "rg-ordinus-tfstate"
+container_name      = "tfstate"
+location            = "swedencentral"

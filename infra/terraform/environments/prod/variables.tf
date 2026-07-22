@@ -1,5 +1,5 @@
 variable "resource_group_name" {
-  description = "Name of the resource group that will contain the Medalj.com production environment."
+  description = "Name of the resource group that will contain the Ordinus production backend."
   type        = string
 }
 
@@ -15,6 +15,6 @@ variable "tags" {
   default = {
     environment = "prod"
     managed-by  = "terraform"
-    project     = "medalj"
+    project     = "ordinus"
   }
 }
