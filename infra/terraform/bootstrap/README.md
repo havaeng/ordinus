@@ -8,6 +8,11 @@ state can be enabled:
 - a private blob container;
 - blob versioning and 30-day soft delete;
 - a Storage Blob Data Contributor assignment for the bootstrap administrator;
+- separate user-assigned identities for GitHub plan and apply workflows;
+- environment-bound GitHub OIDC federation without client secrets;
+- read-only Azure and state access for the plan identity;
+- state write access and a narrowly scoped resource-group creator role for the
+  apply identity;
 - a `CanNotDelete` management lock on the Storage Account.
 
 Shared-key authentication is disabled. Local administration and future CI
@@ -26,3 +31,19 @@ will use `prod.tfstate` in the same container.
 The backend authenticates to the Blob data plane with Microsoft Entra ID. Local
 commands use the dedicated `~/.azure-ordinus` Azure CLI profile; future CI
 workflows will use workload identity federation instead of account keys.
+
+## GitHub environments
+
+The federated credentials trust these exact GitHub OIDC subjects:
+
+- `repo:havaeng/ordinus:environment:production-plan`
+- `repo:havaeng/ordinus:environment:production`
+
+Both GitHub environments have required reviewers. `production-plan` permits
+pull-request refs, while `production` is restricted to the `main` branch. Each
+environment defines `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and
+`AZURE_SUBSCRIPTION_ID` as non-secret environment variables. The plan identity
+can read Azure resources and Terraform state but cannot modify either. The apply
+identity can update state and create the initial production resource group, but
+its custom role deliberately omits resource-group deletion and all permissions
+for resources inside the group.

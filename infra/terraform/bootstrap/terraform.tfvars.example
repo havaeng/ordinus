@@ -5,6 +5,11 @@ storage_account_name = "stordinustfstateabc123"
 # Object ID of the Entra user performing and recovering the bootstrap.
 state_administrator_principal_id = "00000000-0000-0000-0000-000000000000"
 
+# OIDC subjects are bound to these exact repository and environment names.
+github_repository        = "havaeng/ordinus"
+github_plan_environment  = "production-plan"
+github_apply_environment = "production"
+
 # These values normally do not need to be changed.
 resource_group_name = "rg-ordinus-tfstate"
 container_name      = "tfstate"

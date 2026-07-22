@@ -16,10 +16,10 @@ pipeline that consumes them is ready.
 4. **Production backend (complete)** — Configure the production root to use
    `prod.tfstate` and verify remote locking without changing production
    resources.
-5. **GitHub OIDC identities and RBAC (next)** — Create separate plan and apply
+5. **GitHub OIDC identities and RBAC (complete)** — Create separate plan and apply
    identities. The plan identity is read-only; the apply identity receives only
    the permissions needed for the production resource group and state.
-6. **Pull-request plan** — Run and publish `terraform plan` on infrastructure
+6. **Pull-request plan (next)** — Run and publish `terraform plan` on infrastructure
    pull requests. Never apply pull-request code.
 7. **Protected production apply** — Re-plan after merge and apply through a
    protected GitHub `production` environment with concurrency control.
