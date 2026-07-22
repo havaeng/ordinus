@@ -12,8 +12,9 @@ state to `bootstrap.tfstate`, and provisioned separate GitHub OIDC identities fo
 plan and apply. The protected GitHub environments `production-plan` and
 `production` hold their environment-specific Azure IDs; no client secrets are
 used. The production root is connected to the separate `prod.tfstate` key. Its
-verified plan contains only the new production resource group and has not been
-applied.
+first protected apply created `rg-ordinus-prod`; a subsequent state refresh and
+plan confirmed that the deployed infrastructure matches the configuration with
+no changes.
 
 Pull requests that change the production Terraform root run
 `.github/workflows/terraform-plan.yml`. The plan job uses the protected
@@ -51,8 +52,10 @@ Run the same three commands with `infra/terraform/bootstrap` to check the
 bootstrap root in CI. For authenticated local bootstrap checks, use the
 dedicated Azure CLI profile and initialize the configured remote backend.
 
-Do not apply the production root locally. Merge and review the protected apply
-workflow first; its initial manual run is a separate roadmap increment.
+Do not apply the production root locally. Use the protected GitHub workflow for
+all production changes. The next increment replaces the apply identity's
+temporary subscription-level resource-group creator permission with Contributor
+scoped only to `rg-ordinus-prod`.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
