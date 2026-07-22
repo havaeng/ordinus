@@ -1,0 +1,76 @@
+name: Terraform production plan
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "infra/terraform/environments/prod/**"
+      - ".github/workflows/terraform-plan.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    name: Plan production
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production-plan
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: terraform-production-plan-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: infra/terraform/environments/prod
+    env:
+      ARM_USE_OIDC: "true"
+      ARM_USE_AZUREAD: "true"
+      ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
+      TF_VAR_resource_group_name: rg-ordinus-prod
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.5
+
+      - name: Initialize Terraform
+        run: terraform init -input=false
+
+      - name: Plan production
+        shell: bash
+        run: |
+          set +e
+          terraform plan \
+            -detailed-exitcode \
+            -input=false \
+            -lock=false \
+            -no-color \
+            > terraform-plan.txt 2>&1
+          plan_exit_code=$?
+          set -e
+
+          cat terraform-plan.txt
+
+          if [ "$plan_exit_code" -eq 0 ]; then
+            echo "## Terraform production plan: no changes" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$plan_exit_code" -eq 2 ]; then
+            echo "## Terraform production plan: changes detected" >> "$GITHUB_STEP_SUMMARY"
+            echo "Review the plan output in the workflow log." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## Terraform production plan: failed" >> "$GITHUB_STEP_SUMMARY"
+            echo "Review the error in the workflow log." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi

@@ -13,8 +13,14 @@ plan and apply. The protected GitHub environments `production-plan` and
 `production` hold their environment-specific Azure IDs; no client secrets are
 used. The production root is connected to the separate `prod.tfstate` key. Its
 verified plan contains only the new production resource group and has not been
-applied. CI checks formatting and validates both root modules, but does not yet
-authenticate to Azure or run a plan.
+applied.
+
+Pull requests that change the production Terraform root run
+`.github/workflows/terraform-plan.yml`. The plan job uses the protected
+`production-plan` environment and Terraform's native GitHub OIDC support. It is
+limited to pull requests whose source branch belongs to this repository, reads
+the remote state without locking it, and cannot apply changes. A reviewer must
+approve the GitHub environment before the job receives its OIDC token.
 
 ```text
 infra/terraform/
@@ -36,8 +42,9 @@ Run the same three commands with `infra/terraform/bootstrap` to check the
 bootstrap root in CI. For authenticated local bootstrap checks, use the
 dedicated Azure CLI profile and initialize the configured remote backend.
 
-Do not apply the production root yet. The pull-request plan workflow and the
-protected apply workflow must be added and reviewed first.
+Do not apply the production root yet. The pull-request plan workflow must first
+be verified in GitHub, then the protected apply workflow must be added and
+reviewed.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
