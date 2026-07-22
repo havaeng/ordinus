@@ -14,6 +14,11 @@ variable "storage_account_name" {
   }
 }
 
+variable "state_administrator_principal_id" {
+  description = "Object ID of the Entra user allowed to administer Terraform state blobs."
+  type        = string
+}
+
 variable "container_name" {
   description = "Name of the private blob container used for Terraform state files."
   type        = string
