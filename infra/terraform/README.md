@@ -8,7 +8,8 @@ Static Web App are not managed by this backend configuration.
 ## Current iteration
 
 The bootstrap root has created the protected Azure Storage backend and migrated
-its state to `bootstrap.tfstate`. The production root still defines only a new
+its state to `bootstrap.tfstate`. The production root is now connected to the
+separate `prod.tfstate` key. Its verified plan contains only the new production
 resource group and has not been applied. CI checks formatting and validates both
 root modules, but does not yet authenticate to Azure or run a plan.
 
@@ -32,9 +33,9 @@ Run the same three commands with `infra/terraform/bootstrap` to check the
 bootstrap root in CI. For authenticated local bootstrap checks, use the
 dedicated Azure CLI profile and initialize the configured remote backend.
 
-Do not apply the production root yet. Its remote backend, GitHub OIDC
-identities, permissions, plan workflow, and protected apply workflow must be
-added and reviewed first.
+Do not apply the production root yet. GitHub OIDC identities, permissions, the
+plan workflow, and the protected apply workflow must be added and reviewed
+first.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
