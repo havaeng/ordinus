@@ -43,11 +43,14 @@ pipeline that consumes them is ready.
 11c. **Upload boundary and CORS (complete)** — Route initial uploads through the
      authenticated API, so Blob CORS and SAS are not needed. Record the
      validation and abuse-control requirements in ADR 0001.
-12. **Container Registry (current)** — Create a Basic Azure Container Registry
+12. **Container Registry (complete)** — Create a Basic Azure Container Registry
     with admin credentials disabled.
-13. **Backend image CI (next)** — Test and build the Spring Boot image,
-    authenticate by OIDC, and push immutable image tags to ACR. Do not deploy
-    yet.
+13a. **Backend container build (current)** — Package the Spring Boot backend in
+     a non-root Java 21 runtime image and verify the build in pull requests.
+13b. **Image publisher identity and RBAC (next)** — Add a dedicated GitHub OIDC
+     identity with push access scoped only to the production registry.
+13c. **Backend image publish workflow** — After tests pass on `main`, push only
+     an immutable commit-SHA tag to ACR. Do not deploy it yet.
 14. **Key Vault and runtime identity** — Create a user-assigned managed identity,
     Key Vault, and narrowly scoped access for runtime secrets and Blob Storage.
 

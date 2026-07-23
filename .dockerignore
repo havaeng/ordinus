@@ -1,0 +1,13 @@
+.git
+.github
+.gradle
+.idea
+.kotlin
+build
+target
+infra
+docs
+src/main/resources/seed/medals
+*.iml
+compose.yaml
+HELP.md

@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     id("org.springframework.boot") version "4.0.3"
     id("io.spring.dependency-management") version "1.1.7"
@@ -67,4 +69,12 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.named<BootJar>("bootJar") {
+    archiveFileName.set("ordinus.jar")
+
+    // These source images support the local Azurite seed runner. Production
+    // images live in Blob Storage and must not inflate every backend image.
+    exclude("seed/medals/**")
 }
