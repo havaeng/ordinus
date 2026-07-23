@@ -16,7 +16,8 @@ group `rg-medalj-dev` and remains outside this production backend root.
 The application Storage Account foundation uses Standard LRS in Sweden Central.
 Anonymous blob access, Shared Key authorization, local users, and cross-tenant
 replication are disabled. Microsoft Entra ID is the default authorization path,
-and HTTPS with TLS 1.2 or newer is required.
+and HTTPS with TLS 1.2 or newer is required. The protected production workflow
+has applied the account, and a subsequent plan confirmed no drift.
 
 The public network endpoint remains enabled so future Azure-hosted runtimes can
 reach it without a private endpoint. This does not make blob data public:
