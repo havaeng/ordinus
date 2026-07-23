@@ -62,10 +62,15 @@ on `rg-medalj-dev`, while the production root defines a separate monthly budget
 and notifications for `rg-ordinus-prod`.
 
 Application Blob Storage is introduced in smaller increments. The secured
-Storage Account is applied. The current increment adds separate private
-containers for submitted and published images, Blob versioning, and 30-day
-soft-delete retention. CORS and runtime data-plane access remain separate
-reviewed changes.
+Storage Account, separate private containers for submitted and published
+images, Blob versioning, and 30-day soft-delete retention are applied and
+verified.
+
+Initial image uploads will pass through the authenticated Ordinus API. Direct
+browser uploads, Blob CORS, and SAS are intentionally omitted. The decision,
+required abuse controls, and criteria for revisiting direct upload are recorded
+in [`ADR 0001`](../../docs/architecture/decisions/0001-image-uploads-through-api.md).
+Runtime data-plane access remains a separate reviewed change.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
