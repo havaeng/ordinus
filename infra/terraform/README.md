@@ -57,6 +57,10 @@ all production changes. The apply identity has Contributor scoped only to
 `rg-ordinus-prod` plus separate write access to Terraform state; its temporary
 subscription-level permission has been removed.
 
+Cost guardrails are scoped independently: the existing frontend budget remains
+on `rg-medalj-dev`, while the production root defines a separate monthly budget
+and notifications for `rg-ordinus-prod`.
+
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
 values should be supplied by CI later.

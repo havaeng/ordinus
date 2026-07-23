@@ -6,3 +6,9 @@ resource_group_name = "rg-ordinus-prod"
 # Change this only after confirming that all planned Azure services are available
 # in the chosen region.
 location = "swedencentral"
+
+# Azure evaluates this amount in the subscription billing currency (SEK for the
+# current subscription). Budgets send alerts but do not stop resources.
+monthly_budget_amount = 300
+budget_start_date     = "2026-08-01T00:00:00Z"
+budget_contact_emails = ["info@medalj.com"]
