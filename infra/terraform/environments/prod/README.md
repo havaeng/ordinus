@@ -4,9 +4,13 @@ This root module uses the AzureRM backend at `prod.tfstate`, separate from the
 bootstrap root's `bootstrap.tfstate`. The state container uses Microsoft Entra
 ID authentication; Storage Account keys are not used.
 
-The root currently defines only `rg-ordinus-prod`. Its first protected GitHub
-apply completed successfully. The resource group is tracked in `prod.tfstate`,
-and the subsequent plan contains no changes or destroys.
+The root defines `rg-ordinus-prod` and a monthly resource-group budget. The
+budget defaults to 300 SEK and notifies `info@medalj.com` at 50, 75, 90, and
+100 percent of actual spend, plus 100 percent of forecasted spend. It reports
+cost but does not stop or disable Azure resources.
+
+The existing `budget-medalj` budget belongs to the legacy frontend resource
+group `rg-medalj-dev` and remains outside this production backend root.
 
 CI validation uses `terraform init -backend=false`. Authenticated local checks
 must use the dedicated `~/.azure-ordinus` Azure CLI profile and the intended
