@@ -25,11 +25,15 @@ reach it without a private endpoint. This does not make blob data public. The
 `published-images` container, and both deny anonymous access. Blob versioning
 and 30-day soft-delete retention for blobs and containers provide a limited
 recovery window. Retained versions and deleted data continue to consume storage
-until they expire.
+until they expire. The protected production workflow has applied these settings,
+and a subsequent plan confirmed no drift.
 
-CORS, upload flow, and runtime data-plane RBAC are deliberately deferred to
-separate increments. Until those are configured, creating the containers does
-not grant application users permission to upload or read images.
+Initial uploads will pass through the authenticated Ordinus API, so no Blob
+Storage CORS rule or upload SAS is configured. Runtime data-plane RBAC remains a
+separate increment. Until the API and its managed identity are configured,
+creating the containers does not grant application users permission to upload
+or read images. See
+[`ADR 0001`](../../../../docs/architecture/decisions/0001-image-uploads-through-api.md).
 
 CI validation uses `terraform init -backend=false`. Authenticated local checks
 must use the dedicated `~/.azure-ordinus` Azure CLI profile and the intended
