@@ -45,8 +45,5 @@ environment defines `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and
 `AZURE_SUBSCRIPTION_ID` as non-secret environment variables. The plan identity
 can read Azure resources and Terraform state but cannot modify either. The apply
 identity can update state and, through Contributor, manage resources inside
-`rg-ordinus-prod`. During the staged permission transition it temporarily
-retains the original subscription-level resource-group creator assignment. That
-assignment and its custom role are removed only after the resource-group-scoped
-Contributor assignment has been applied and verified. Contributor cannot manage
-Azure RBAC.
+`rg-ordinus-prod`. It has no subscription-level role assignment and Contributor
+cannot manage Azure RBAC.
