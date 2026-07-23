@@ -1,5 +1,9 @@
 data "azurerm_subscription" "current" {}
 
+locals {
+  production_resource_group_id = "${data.azurerm_subscription.current.id}/resourceGroups/${var.production_resource_group_name}"
+}
+
 resource "azurerm_role_definition" "production_resource_group_creator" {
   name        = "Ordinus Production Resource Group Creator"
   scope       = data.azurerm_subscription.current.id
@@ -41,10 +45,16 @@ resource "azurerm_role_assignment" "github_apply_resource_group_creator" {
   principal_type     = "ServicePrincipal"
 }
 
+resource "azurerm_role_assignment" "github_apply_production_contributor" {
+  scope                = local.production_resource_group_id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_user_assigned_identity.github_apply.principal_id
+  principal_type       = "ServicePrincipal"
+}
+
 resource "azurerm_role_assignment" "github_apply_state_contributor" {
   scope                = azurerm_storage_account.tfstate.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_user_assigned_identity.github_apply.principal_id
   principal_type       = "ServicePrincipal"
 }
-

@@ -26,7 +26,7 @@ pipeline that consumes them is ready.
 8. **First production apply (complete)** — Create only `rg-ordinus-prod` and
    verify that Terraform state, locking, OIDC, plan, and apply all work end to
    end.
-9. **Scope apply identity to production (next)** — Replace the temporary
+9. **Scope apply identity to production (current)** — Replace the temporary
    subscription-level resource-group creator assignment with Contributor scoped
    only to `rg-ordinus-prod`, so future resources can be managed inside the group
    without broader subscription permissions.

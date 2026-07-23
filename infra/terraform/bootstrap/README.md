@@ -11,8 +11,8 @@ state can be enabled:
 - separate user-assigned identities for GitHub plan and apply workflows;
 - environment-bound GitHub OIDC federation without client secrets;
 - read-only Azure and state access for the plan identity;
-- state write access and a narrowly scoped resource-group creator role for the
-  apply identity;
+- state write access and Contributor scoped only to the existing production
+  resource group for the apply identity;
 - a `CanNotDelete` management lock on the Storage Account.
 
 Shared-key authentication is disabled. Local administration and future CI
@@ -44,6 +44,9 @@ pull-request refs, while `production` is restricted to the `main` branch. Each
 environment defines `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and
 `AZURE_SUBSCRIPTION_ID` as non-secret environment variables. The plan identity
 can read Azure resources and Terraform state but cannot modify either. The apply
-identity can update state and create the initial production resource group, but
-its custom role deliberately omits resource-group deletion and all permissions
-for resources inside the group.
+identity can update state and, through Contributor, manage resources inside
+`rg-ordinus-prod`. During the staged permission transition it temporarily
+retains the original subscription-level resource-group creator assignment. That
+assignment and its custom role are removed only after the resource-group-scoped
+Contributor assignment has been applied and verified. Contributor cannot manage
+Azure RBAC.
