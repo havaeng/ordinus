@@ -35,9 +35,9 @@ pipeline that consumes them is ready.
 
 10. **Cost guardrails (complete)** — Add an Azure budget and alerts. A budget reports
     spend; it does not impose a hard spending cap.
-11a. **Application Storage Account foundation (current)** — Create the secure,
+11a. **Application Storage Account foundation (complete)** — Create the secure,
      cost-conscious Storage Account without containers or data-plane access.
-11b. **Private image containers and retention** — Add private containers,
+11b. **Private image containers and retention (next)** — Add private containers,
      versioning, soft delete, and explicit retention periods.
 11c. **Upload boundary and CORS** — Decide whether uploads flow through the API
      or use short-lived user delegation SAS, then add only the required CORS and
