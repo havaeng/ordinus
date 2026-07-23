@@ -9,6 +9,17 @@ variable "location" {
   default     = "swedencentral"
 }
 
+variable "application_storage_account_name" {
+  description = "Globally unique name of the Storage Account used for Ordinus application blobs."
+  type        = string
+  default     = "stordinusprod696163"
+
+  validation {
+    condition     = can(regex("^[a-z0-9]{3,24}$", var.application_storage_account_name))
+    error_message = "The application Storage Account name must contain 3-24 lowercase letters or digits."
+  }
+}
+
 variable "monthly_budget_amount" {
   description = "Monthly cost budget for the Ordinus production resource group, in the subscription billing currency."
   type        = number
