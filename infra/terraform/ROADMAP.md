@@ -33,9 +33,9 @@ pipeline that consumes them is ready.
 
 ## Cost and shared services
 
-10. **Cost guardrails (current)** — Add an Azure budget and alerts. A budget reports
+10. **Cost guardrails (complete)** — Add an Azure budget and alerts. A budget reports
     spend; it does not impose a hard spending cap.
-11. **Application Blob Storage** — Create the medal-image Storage Account and
+11. **Application Blob Storage (next)** — Create the medal-image Storage Account and
     private containers, including retention, CORS, and upload constraints.
 12. **Container Registry** — Create a Basic Azure Container Registry with admin
     credentials disabled.

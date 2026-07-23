@@ -7,7 +7,8 @@ ID authentication; Storage Account keys are not used.
 The root defines `rg-ordinus-prod` and a monthly resource-group budget. The
 budget defaults to 300 SEK and notifies `info@medalj.com` at 50, 75, 90, and
 100 percent of actual spend, plus 100 percent of forecasted spend. It reports
-cost but does not stop or disable Azure resources.
+cost but does not stop or disable Azure resources. The protected production
+workflow has applied the budget, and a subsequent plan confirmed no drift.
 
 The existing `budget-medalj` budget belongs to the legacy frontend resource
 group `rg-medalj-dev` and remains outside this production backend root.
