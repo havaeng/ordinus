@@ -26,15 +26,15 @@ pipeline that consumes them is ready.
 8. **First production apply (complete)** — Create only `rg-ordinus-prod` and
    verify that Terraform state, locking, OIDC, plan, and apply all work end to
    end.
-9. **Scope apply identity to production (current)** — Replace the temporary
+9. **Scope apply identity to production (complete)** — Replace the temporary
    subscription-level resource-group creator assignment with Contributor scoped
    only to `rg-ordinus-prod`, so future resources can be managed inside the group
    without broader subscription permissions.
 
 ## Cost and shared services
 
-10. **Cost guardrails** — Add an Azure budget and alerts. A budget reports spend;
-   it does not impose a hard spending cap.
+10. **Cost guardrails (next)** — Add an Azure budget and alerts. A budget reports
+    spend; it does not impose a hard spending cap.
 11. **Application Blob Storage** — Create the medal-image Storage Account and
     private containers, including retention, CORS, and upload constraints.
 12. **Container Registry** — Create a Basic Azure Container Registry with admin

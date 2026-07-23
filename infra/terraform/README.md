@@ -53,9 +53,9 @@ bootstrap root in CI. For authenticated local bootstrap checks, use the
 dedicated Azure CLI profile and initialize the configured remote backend.
 
 Do not apply the production root locally. Use the protected GitHub workflow for
-all production changes. The current increment replaces the apply identity's
-temporary subscription-level resource-group creator permission with Contributor
-scoped only to `rg-ordinus-prod`.
+all production changes. The apply identity has Contributor scoped only to
+`rg-ordinus-prod` plus separate write access to Terraform state; its temporary
+subscription-level permission has been removed.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
