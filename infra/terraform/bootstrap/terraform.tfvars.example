@@ -9,6 +9,7 @@ state_administrator_principal_id = "00000000-0000-0000-0000-000000000000"
 github_repository        = "havaeng/ordinus"
 github_plan_environment  = "production-plan"
 github_apply_environment = "production"
+production_resource_group_name = "rg-ordinus-prod"
 
 # These values normally do not need to be changed.
 resource_group_name = "rg-ordinus-tfstate"

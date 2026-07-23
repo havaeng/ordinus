@@ -53,7 +53,7 @@ bootstrap root in CI. For authenticated local bootstrap checks, use the
 dedicated Azure CLI profile and initialize the configured remote backend.
 
 Do not apply the production root locally. Use the protected GitHub workflow for
-all production changes. The next increment replaces the apply identity's
+all production changes. The current increment replaces the apply identity's
 temporary subscription-level resource-group creator permission with Contributor
 scoped only to `rg-ordinus-prod`.
 

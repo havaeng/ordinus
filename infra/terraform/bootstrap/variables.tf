@@ -37,6 +37,12 @@ variable "github_apply_environment" {
   default     = "production"
 }
 
+variable "production_resource_group_name" {
+  description = "Name of the existing production resource group managed by the apply identity."
+  type        = string
+  default     = "rg-ordinus-prod"
+}
+
 variable "container_name" {
   description = "Name of the private blob container used for Terraform state files."
   type        = string
