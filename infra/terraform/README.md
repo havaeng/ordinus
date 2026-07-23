@@ -61,6 +61,10 @@ Cost guardrails are scoped independently: the existing frontend budget remains
 on `rg-medalj-dev`, while the production root defines a separate monthly budget
 and notifications for `rg-ordinus-prod`.
 
+Application Blob Storage is introduced in smaller increments. The first creates
+only the secured Storage Account; containers, retention, CORS, and runtime
+data-plane access follow in separate reviewed changes.
+
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
 values should be supplied by CI later.

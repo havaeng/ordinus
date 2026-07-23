@@ -35,8 +35,13 @@ pipeline that consumes them is ready.
 
 10. **Cost guardrails (complete)** — Add an Azure budget and alerts. A budget reports
     spend; it does not impose a hard spending cap.
-11. **Application Blob Storage (next)** — Create the medal-image Storage Account and
-    private containers, including retention, CORS, and upload constraints.
+11a. **Application Storage Account foundation (current)** — Create the secure,
+     cost-conscious Storage Account without containers or data-plane access.
+11b. **Private image containers and retention** — Add private containers,
+     versioning, soft delete, and explicit retention periods.
+11c. **Upload boundary and CORS** — Decide whether uploads flow through the API
+     or use short-lived user delegation SAS, then add only the required CORS and
+     abuse controls.
 12. **Container Registry** — Create a Basic Azure Container Registry with admin
     credentials disabled.
 13. **Backend image CI** — Test and build the Spring Boot image, authenticate by

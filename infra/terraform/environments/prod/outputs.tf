@@ -12,3 +12,18 @@ output "monthly_budget_id" {
   description = "ID of the monthly Ordinus production resource-group budget."
   value       = azurerm_consumption_budget_resource_group.monthly.id
 }
+
+output "application_storage_account_id" {
+  description = "Resource ID of the Storage Account used for Ordinus application blobs."
+  value       = azurerm_storage_account.application.id
+}
+
+output "application_storage_account_name" {
+  description = "Name of the Storage Account used for Ordinus application blobs."
+  value       = azurerm_storage_account.application.name
+}
+
+output "application_blob_endpoint" {
+  description = "Primary Blob endpoint of the Ordinus application Storage Account."
+  value       = azurerm_storage_account.application.primary_blob_endpoint
+}
