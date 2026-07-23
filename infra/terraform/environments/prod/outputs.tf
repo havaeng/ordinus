@@ -35,3 +35,18 @@ output "image_container_names" {
     published   = azurerm_storage_container.published_images.name
   }
 }
+
+output "container_registry_id" {
+  description = "Resource ID of the Azure Container Registry used for Ordinus backend images."
+  value       = azurerm_container_registry.application.id
+}
+
+output "container_registry_name" {
+  description = "Name of the Azure Container Registry used for Ordinus backend images."
+  value       = azurerm_container_registry.application.name
+}
+
+output "container_registry_login_server" {
+  description = "Login server of the Azure Container Registry used for Ordinus backend images."
+  value       = azurerm_container_registry.application.login_server
+}

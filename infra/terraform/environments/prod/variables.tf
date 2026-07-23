@@ -20,6 +20,17 @@ variable "application_storage_account_name" {
   }
 }
 
+variable "container_registry_name" {
+  description = "Globally unique name of the Azure Container Registry used for Ordinus backend images."
+  type        = string
+  default     = "acrordinusprod696163"
+
+  validation {
+    condition     = can(regex("^[a-z0-9]{5,50}$", var.container_registry_name))
+    error_message = "The Container Registry name must contain 5-50 lowercase letters or digits."
+  }
+}
+
 variable "monthly_budget_amount" {
   description = "Monthly cost budget for the Ordinus production resource group, in the subscription billing currency."
   type        = number

@@ -10,6 +10,9 @@ location = "swedencentral"
 # Storage Account names are globally unique and cannot contain separators.
 application_storage_account_name = "stordinusprod696163"
 
+# Container Registry names are globally unique and cannot contain separators.
+container_registry_name = "acrordinusprod696163"
+
 # Azure evaluates this amount in the subscription billing currency (SEK for the
 # current subscription). Budgets send alerts but do not stop resources.
 monthly_budget_amount = 300
