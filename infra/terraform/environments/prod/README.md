@@ -35,6 +35,14 @@ creating the containers does not grant application users permission to upload
 or read images. See
 [`ADR 0001`](../../../../docs/architecture/decisions/0001-image-uploads-through-api.md).
 
+The current increment adds `acrordinusprod696163`, a private Basic Azure
+Container Registry for Ordinus backend images. Its local admin account is
+disabled. The public endpoint remains enabled for GitHub-hosted runners and
+future Container Apps, but it does not permit anonymous access. Push and pull
+RBAC are deliberately deferred to the backend image and runtime identity
+increments. Basic includes 10 GB of registry storage; automated cleanup of old
+image tags will be designed with the image workflow.
+
 CI validation uses `terraform init -backend=false`. Authenticated local checks
 must use the dedicated `~/.azure-ordinus` Azure CLI profile and the intended
 subscription. Production changes are applied only through the protected GitHub

@@ -72,6 +72,13 @@ required abuse controls, and criteria for revisiting direct upload are recorded
 in [`ADR 0001`](../../docs/architecture/decisions/0001-image-uploads-through-api.md).
 Runtime data-plane access remains a separate reviewed change.
 
+The current increment adds only a private Basic Azure Container Registry for
+backend images. Its local admin account is disabled. The public network endpoint
+remains enabled so GitHub-hosted runners and future Azure Container Apps can
+reach it, but clients must authenticate and receive explicit registry
+authorization. Image push/pull role assignments and image lifecycle automation
+are deliberately deferred until their respective consumers exist.
+
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
 values should be supplied by CI later.
