@@ -17,7 +17,31 @@ resource "azurerm_storage_account" "application" {
   public_network_access_enabled    = true
   shared_access_key_enabled        = false
 
+  blob_properties {
+    versioning_enabled = true
+
+    delete_retention_policy {
+      days = 30
+    }
+
+    container_delete_retention_policy {
+      days = 30
+    }
+  }
+
   tags = merge(var.tags, {
     purpose = "application-blob-storage"
   })
+}
+
+resource "azurerm_storage_container" "image_submissions" {
+  name                  = "image-submissions"
+  storage_account_id    = azurerm_storage_account.application.id
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "published_images" {
+  name                  = "published-images"
+  storage_account_id    = azurerm_storage_account.application.id
+  container_access_type = "private"
 }

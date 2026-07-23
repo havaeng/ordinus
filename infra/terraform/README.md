@@ -61,9 +61,11 @@ Cost guardrails are scoped independently: the existing frontend budget remains
 on `rg-medalj-dev`, while the production root defines a separate monthly budget
 and notifications for `rg-ordinus-prod`.
 
-Application Blob Storage is introduced in smaller increments. The first creates
-only the secured Storage Account and is now applied; containers, retention,
-CORS, and runtime data-plane access follow in separate reviewed changes.
+Application Blob Storage is introduced in smaller increments. The secured
+Storage Account is applied. The current increment adds separate private
+containers for submitted and published images, Blob versioning, and 30-day
+soft-delete retention. CORS and runtime data-plane access remain separate
+reviewed changes.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
