@@ -27,3 +27,11 @@ output "application_blob_endpoint" {
   description = "Primary Blob endpoint of the Ordinus application Storage Account."
   value       = azurerm_storage_account.application.primary_blob_endpoint
 }
+
+output "image_container_names" {
+  description = "Names of the private containers for submitted and published images."
+  value = {
+    submissions = azurerm_storage_container.image_submissions.name
+    published   = azurerm_storage_container.published_images.name
+  }
+}

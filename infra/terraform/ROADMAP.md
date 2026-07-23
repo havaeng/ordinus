@@ -37,11 +37,12 @@ pipeline that consumes them is ready.
     spend; it does not impose a hard spending cap.
 11a. **Application Storage Account foundation (complete)** — Create the secure,
      cost-conscious Storage Account without containers or data-plane access.
-11b. **Private image containers and retention (next)** — Add private containers,
-     versioning, soft delete, and explicit retention periods.
-11c. **Upload boundary and CORS** — Decide whether uploads flow through the API
-     or use short-lived user delegation SAS, then add only the required CORS and
-     abuse controls.
+11b. **Private image containers and retention (current)** — Add separate private
+     containers for submitted and published images, plus versioning and 30-day
+     soft-delete retention.
+11c. **Upload boundary and CORS (next)** — Decide whether uploads flow through
+     the API or use short-lived user delegation SAS, then add only the required
+     CORS and abuse controls.
 12. **Container Registry** — Create a Basic Azure Container Registry with admin
     credentials disabled.
 13. **Backend image CI** — Test and build the Spring Boot image, authenticate by
