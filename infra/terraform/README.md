@@ -79,6 +79,11 @@ reach it, but clients must authenticate and receive explicit registry
 authorization. Image push/pull role assignments and image lifecycle automation
 are deliberately deferred until their respective consumers exist.
 
+Backend image publishing is also split into reviewable increments. The first
+adds and verifies the non-root Java 21 container build without Azure
+authentication or a registry push. See the
+[container image notes](../../docs/deployment/container-image.md).
+
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
 values should be supplied by CI later.

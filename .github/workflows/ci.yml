@@ -32,3 +32,6 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test
+
+      - name: Build backend container image
+        run: docker build --tag ordinus-api:ci .
