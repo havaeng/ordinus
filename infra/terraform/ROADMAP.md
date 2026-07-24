@@ -49,11 +49,14 @@ pipeline that consumes them is ready.
      a non-root Java 21 runtime image and verify the build in pull requests.
 13b. **Image publisher identity and RBAC (complete)** — Add a dedicated GitHub OIDC
      identity with push access scoped only to the production registry.
-13c. **Backend image publish workflow (current)** — After tests pass on `main`,
+13c. **Backend image publish workflow (complete)** — After tests pass on `main`,
      push only an immutable commit-SHA tag to ACR. Do not deploy it yet.
-14. **Key Vault and runtime identity (next)** — Create a user-assigned managed
-    identity, Key Vault, and narrowly scoped access for runtime secrets and Blob
-    Storage.
+14a. **Key Vault and runtime identity foundation (current)** — Create a
+     user-assigned managed identity for the backend and an empty, RBAC-enabled
+     Key Vault. Do not add secrets or role assignments yet.
+14b. **Runtime identity RBAC (next)** — Give the runtime identity narrowly scoped
+     pull access to ACR, data-plane access to the two Blob containers, and secret
+     read access to Key Vault through the separately controlled bootstrap root.
 
 ## Runtime and data
 
