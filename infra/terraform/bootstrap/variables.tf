@@ -37,10 +37,27 @@ variable "github_apply_environment" {
   default     = "production"
 }
 
+variable "github_image_environment" {
+  description = "Main-branch GitHub environment used by the backend image publishing workflow."
+  type        = string
+  default     = "production-images"
+}
+
 variable "production_resource_group_name" {
   description = "Name of the existing production resource group managed by the apply identity."
   type        = string
   default     = "rg-ordinus-prod"
+}
+
+variable "production_container_registry_name" {
+  description = "Name of the existing production registry targeted by the image publisher."
+  type        = string
+  default     = "acrordinusprod696163"
+
+  validation {
+    condition     = can(regex("^[a-z0-9]{5,50}$", var.production_container_registry_name))
+    error_message = "The production Container Registry name must contain 5-50 lowercase letters or digits."
+  }
 }
 
 variable "container_name" {

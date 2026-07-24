@@ -45,12 +45,12 @@ pipeline that consumes them is ready.
      validation and abuse-control requirements in ADR 0001.
 12. **Container Registry (complete)** — Create a Basic Azure Container Registry
     with admin credentials disabled.
-13a. **Backend container build (current)** — Package the Spring Boot backend in
+13a. **Backend container build (complete)** — Package the Spring Boot backend in
      a non-root Java 21 runtime image and verify the build in pull requests.
-13b. **Image publisher identity and RBAC (next)** — Add a dedicated GitHub OIDC
+13b. **Image publisher identity and RBAC (current)** — Add a dedicated GitHub OIDC
      identity with push access scoped only to the production registry.
-13c. **Backend image publish workflow** — After tests pass on `main`, push only
-     an immutable commit-SHA tag to ACR. Do not deploy it yet.
+13c. **Backend image publish workflow (next)** — After tests pass on `main`,
+     push only an immutable commit-SHA tag to ACR. Do not deploy it yet.
 14. **Key Vault and runtime identity** — Create a user-assigned managed identity,
     Key Vault, and narrowly scoped access for runtime secrets and Blob Storage.
 

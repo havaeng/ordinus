@@ -9,6 +9,12 @@ from the executable Spring Boot jar. They are used only by the `local` profile's
 Azurite seed runner; production images are stored separately in Azure Blob
 Storage.
 
+The seed files remain tracked in the repository. Before launch, a separate,
+explicitly invoked seed artifact or job can include them and idempotently
+populate the production database and `published-images` container. They are
+excluded only from the permanently running API image so every backend release
+does not carry the same seed payload.
+
 ## Local verification
 
 Run the same checks as the pull-request workflow:

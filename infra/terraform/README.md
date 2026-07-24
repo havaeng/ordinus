@@ -83,6 +83,9 @@ Backend image publishing is also split into reviewable increments. The first
 adds and verifies the non-root Java 21 container build without Azure
 authentication or a registry push. See the
 [container image notes](../../docs/deployment/container-image.md).
+The current increment adds a separate GitHub OIDC identity whose only Azure
+role is `AcrPush` scoped to the production registry. It does not reuse either
+Terraform identity.
 
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific

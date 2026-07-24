@@ -13,6 +13,8 @@ state can be enabled:
 - read-only Azure and state access for the plan identity;
 - state write access and Contributor scoped only to the existing production
   resource group for the apply identity;
+- a separate image publisher identity with `AcrPush` scoped only to the
+  production Container Registry;
 - a `CanNotDelete` management lock on the Storage Account.
 
 Shared-key authentication is disabled. Local administration and future CI
@@ -38,12 +40,19 @@ The federated credentials trust these exact GitHub OIDC subjects:
 
 - `repo:havaeng/ordinus:environment:production-plan`
 - `repo:havaeng/ordinus:environment:production`
+- `repo:havaeng/ordinus:environment:production-images`
 
-Both GitHub environments have required reviewers. `production-plan` permits
-pull-request refs, while `production` is restricted to the `main` branch. Each
-environment defines `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and
-`AZURE_SUBSCRIPTION_ID` as non-secret environment variables. The plan identity
-can read Azure resources and Terraform state but cannot modify either. The apply
-identity can update state and, through Contributor, manage resources inside
-`rg-ordinus-prod`. It has no subscription-level role assignment and Contributor
-cannot manage Azure RBAC.
+The plan and apply GitHub environments have required reviewers.
+`production-plan` permits pull-request refs, while `production` is restricted
+to the `main` branch. Each environment defines `AZURE_CLIENT_ID`,
+`AZURE_TENANT_ID`, and `AZURE_SUBSCRIPTION_ID` as non-secret environment
+variables. The plan identity can read Azure resources and Terraform state but
+cannot modify either. The apply identity can update state and, through
+Contributor, manage resources inside `rg-ordinus-prod`. It has no
+subscription-level role assignment and Contributor cannot manage Azure RBAC.
+
+`production-images` is restricted to `main` but does not require a reviewer,
+because publishing an immutable image does not deploy it. It defines the same
+three non-secret Azure ID variables. Its dedicated identity has only `AcrPush`
+on `acrordinusprod696163`; it cannot change infrastructure, read Terraform
+state, or access other Azure resources.
