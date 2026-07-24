@@ -87,6 +87,13 @@ The current increment adds a separate GitHub OIDC identity whose only Azure
 role is `AcrPush` scoped to the production registry. It does not reuse either
 Terraform identity.
 
+CI and artifact publishing use separate workflows. After `Run CI` succeeds for
+a push to `main`, `Publish backend image` runs through the branch-restricted
+`production-images` GitHub environment. It checks out the exact verified commit,
+publishes `ordinus-api` with the full commit SHA as its only tag, refuses to
+overwrite an existing commit tag, and records the resulting digest without
+deploying the image.
+
 `terraform.tfvars.example` documents suggested production values. A real
 `terraform.tfvars` file is intentionally ignored because environment-specific
 values should be supplied by CI later.

@@ -24,6 +24,15 @@ Run the same checks as the pull-request workflow:
 docker build --tag ordinus-api:local .
 ```
 
-This increment builds the image but does not push it. A separate GitHub OIDC
-identity with registry-scoped push access will be added before images are
-published to Azure Container Registry.
+The `Run CI` workflow lints, tests, and builds the image for pull requests and
+`main` without Azure access. After that workflow succeeds for a push to `main`,
+the separate `Publish backend image` workflow authenticates through the
+`production-images` GitHub environment and pushes:
+
+```text
+acrordinusprod696163.azurecr.io/ordinus-api:<full-git-commit-sha>
+```
+
+No `latest` tag is produced. Before building, the workflow checks whether the
+commit tag already exists and never overwrites it. The job reports the registry
+digest for future deployment, but does not deploy the image.
