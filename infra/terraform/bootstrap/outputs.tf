@@ -23,6 +23,11 @@ output "github_apply_client_id" {
   value       = azurerm_user_assigned_identity.github_apply.client_id
 }
 
+output "github_image_publisher_client_id" {
+  description = "Client ID used by the GitHub backend image publishing workflow."
+  value       = azurerm_user_assigned_identity.github_image_publisher.client_id
+}
+
 output "tenant_id" {
   description = "Azure tenant ID used by GitHub OIDC authentication."
   value       = azurerm_user_assigned_identity.github_apply.tenant_id
