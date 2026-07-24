@@ -31,6 +31,17 @@ variable "container_registry_name" {
   }
 }
 
+variable "key_vault_name" {
+  description = "Globally unique name of the Key Vault used for Ordinus backend secrets."
+  type        = string
+  default     = "kv-ordinus-prod-696163"
+
+  validation {
+    condition     = can(regex("^[a-z][a-z0-9-]{1,22}[a-z0-9]$", var.key_vault_name))
+    error_message = "The Key Vault name must contain 3-24 lowercase letters, digits, or hyphens, start with a letter, and end with a letter or digit."
+  }
+}
+
 variable "monthly_budget_amount" {
   description = "Monthly cost budget for the Ordinus production resource group, in the subscription billing currency."
   type        = number

@@ -39,9 +39,23 @@ The current increment adds `acrordinusprod696163`, a private Basic Azure
 Container Registry for Ordinus backend images. Its local admin account is
 disabled. The public endpoint remains enabled for GitHub-hosted runners and
 future Container Apps, but it does not permit anonymous access. Push and pull
-RBAC are deliberately deferred to the backend image and runtime identity
-increments. Basic includes 10 GB of registry storage; automated cleanup of old
-image tags will be designed with the image workflow.
+RBAC is separated between the dedicated image-publisher identity and the future
+backend runtime identity. Basic includes 10 GB of registry storage; automated
+cleanup of old image tags will be designed with the image workflow.
+
+The backend runtime foundation consists of the user-assigned identity
+`id-ordinus-backend-runtime` and the empty Standard Key Vault
+`kv-ordinus-prod-696163`. The vault uses Azure RBAC rather than legacy access
+policies, permits network access through its public endpoint, and does not
+permit anonymous access. It has 30-day soft-delete retention and purge
+protection, so a deleted vault remains recoverable and cannot be permanently
+purged during that period.
+
+This increment deliberately creates no secrets and grants the runtime identity
+no access. The production Terraform apply identity is a Contributor inside the
+resource group and cannot create role assignments. A following bootstrap
+increment will grant only `AcrPull`, container-scoped Blob data roles, and Key
+Vault secret read access without broadening the normal production workflow.
 
 CI validation uses `terraform init -backend=false`. Authenticated local checks
 must use the dedicated `~/.azure-ordinus` Azure CLI profile and the intended

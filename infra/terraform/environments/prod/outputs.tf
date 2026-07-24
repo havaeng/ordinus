@@ -50,3 +50,33 @@ output "container_registry_login_server" {
   description = "Login server of the Azure Container Registry used for Ordinus backend images."
   value       = azurerm_container_registry.application.login_server
 }
+
+output "backend_runtime_identity_id" {
+  description = "Resource ID of the user-assigned identity used by the Ordinus backend runtime."
+  value       = azurerm_user_assigned_identity.backend_runtime.id
+}
+
+output "backend_runtime_identity_client_id" {
+  description = "Client ID of the user-assigned identity used by the Ordinus backend runtime."
+  value       = azurerm_user_assigned_identity.backend_runtime.client_id
+}
+
+output "backend_runtime_identity_principal_id" {
+  description = "Principal ID used when assigning Azure roles to the Ordinus backend runtime."
+  value       = azurerm_user_assigned_identity.backend_runtime.principal_id
+}
+
+output "key_vault_id" {
+  description = "Resource ID of the Key Vault used for Ordinus backend secrets."
+  value       = azurerm_key_vault.application.id
+}
+
+output "key_vault_name" {
+  description = "Name of the Key Vault used for Ordinus backend secrets."
+  value       = azurerm_key_vault.application.name
+}
+
+output "key_vault_uri" {
+  description = "Data-plane URI of the Key Vault used for Ordinus backend secrets."
+  value       = azurerm_key_vault.application.vault_uri
+}
