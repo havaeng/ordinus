@@ -1,0 +1,121 @@
+name: Publish backend image
+
+on:
+  workflow_run:
+    workflows:
+      - Run CI
+    types:
+      - completed
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish immutable image
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production-images
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: backend-image-${{ github.event.workflow_run.head_sha }}
+      cancel-in-progress: false
+    env:
+      ACR_NAME: acrordinusprod696163
+      ACR_LOGIN_SERVER: acrordinusprod696163.azurecr.io
+      IMAGE_NAME: ordinus-api
+      IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
+
+    steps:
+      - name: Check out verified main commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ env.IMAGE_TAG }}
+          persist-credentials: false
+
+      - name: Log in to Azure with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Check for an existing immutable image
+        id: existing_image
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          image_tag="${IMAGE_NAME}:${IMAGE_TAG}"
+          if digest="$(
+            az acr repository show \
+              --name "$ACR_NAME" \
+              --image "$image_tag" \
+              --query digest \
+              --output tsv \
+              2>/dev/null
+          )"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "digest=$digest" >> "$GITHUB_OUTPUT"
+            echo "Image tag already exists and will not be overwritten: $image_tag"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Log in to Azure Container Registry
+        if: steps.existing_image.outputs.exists != 'true'
+        run: az acr login --name "$ACR_NAME"
+
+      - name: Build immutable backend image
+        if: steps.existing_image.outputs.exists != 'true'
+        run: |
+          docker build \
+            --tag "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}" \
+            .
+
+      - name: Push immutable backend image
+        if: steps.existing_image.outputs.exists != 'true'
+        run: docker push "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}"
+
+      - name: Resolve published digest
+        id: published_image
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ "${{ steps.existing_image.outputs.exists }}" = "true" ]; then
+            digest="${{ steps.existing_image.outputs.digest }}"
+          else
+            digest="$(
+              az acr repository show \
+                --name "$ACR_NAME" \
+                --image "${IMAGE_NAME}:${IMAGE_TAG}" \
+                --query digest \
+                --output tsv
+            )"
+          fi
+
+          test -n "$digest"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Write job summary
+        run: |
+          {
+            echo "## Ordinus backend image"
+            echo
+            echo "- Tag: \`${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}\`"
+            echo "- Digest: \`${{ steps.published_image.outputs.digest }}\`"
+            echo "- Deployment: not performed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Log out from Azure Container Registry
+        if: always() && steps.existing_image.outputs.exists != 'true'
+        run: docker logout "$ACR_LOGIN_SERVER"
